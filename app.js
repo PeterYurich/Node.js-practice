@@ -1,7 +1,8 @@
 const contacts = require("./bd")
+const { program } = require("commander")
 
-const invokeAction = async ({action, id, name, email, phone}) => {
-    switch(action) {
+const invokeAction = async ({ action, id, name, email, phone }) => {
+    switch (action) {
         case "list":
             const allContacts = await contacts.getAll()
             console.log(allContacts);
@@ -11,11 +12,11 @@ const invokeAction = async ({action, id, name, email, phone}) => {
             console.log(oneContact)
             break;
         case "add":
-            const newContact = await contacts.add({name, email, phone})
+            const newContact = await contacts.add({ name, email, phone })
             console.log(newContact)
             break;
         case "updateById":
-            const updatedContact = await contacts.updateById(id, {name, email, phone})
+            const updatedContact = await contacts.updateById(id, { name, email, phone })
         case "removeById":
             const deletedContact = await contacts.removeById(id)
             console.log(deletedContact)
@@ -24,12 +25,15 @@ const invokeAction = async ({action, id, name, email, phone}) => {
     }
 }
 
-// invokeAction({action: "list"})
+program
+    .option("-a, --action <type>")
+    .option("i, --id <type>")
+    .option("-n, --name <type>")
+    .option("--email <type>")
+    .option("--phone <type>")
 
-// invokeAction({action: "getById", id: "3714"})
+program.parse() //перетворює  значення змынної program з масиву на об'єкт
 
-// invokeAction({action: "add", name: "Karog", email: "peteryurich@gmail.com", phone: "0951224700"})
+const options = program.opts()
 
-// invokeAction({action: "updateById", id: "1", name: "newOne", email: "new@gmail.com", phone: "123123123"})
-
-// invokeAction({action: "removeById", id: "6"})
+invokeAction(options)
