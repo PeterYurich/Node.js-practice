@@ -32,7 +32,7 @@ program
     .option("--email <type>")
     .option("--phone <type>")
 
-program.parse() //перетворює  значення змынної program з масиву на об'єкт
+program.parse() //перетворює  значення змінної program з масиву на об'єкт
 
 const options = program.opts()
 
